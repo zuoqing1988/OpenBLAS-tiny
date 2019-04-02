@@ -95,40 +95,6 @@ endif
 	@echo "To install the library, you can run \"make PREFIX=/path/to/your/installation install\"."
 	@echo
 
-shared :
-ifneq ($(NO_SHARED), 1)
-ifeq ($(OSNAME), $(filter $(OSNAME),Linux SunOS Android Haiku))
-	@$(MAKE) -C exports so
-	@ln -fs $(LIBSONAME) $(LIBPREFIX).so
-	@ln -fs $(LIBSONAME) $(LIBPREFIX).so.$(MAJOR_VERSION)
-endif
-ifeq ($(OSNAME), $(filter $(OSNAME),FreeBSD OpenBSD NetBSD DragonFly))
-	@$(MAKE) -C exports so
-	@ln -fs $(LIBSONAME) $(LIBPREFIX).so
-endif
-ifeq ($(OSNAME), Darwin)
-	@$(MAKE) -C exports dyn
-	@ln -fs $(LIBDYNNAME) $(LIBPREFIX).dylib
-endif
-ifeq ($(OSNAME), WINNT)
-	@$(MAKE) -C exports dll
-endif
-ifeq ($(OSNAME), CYGWIN_NT)
-	@$(MAKE) -C exports dll
-endif
-endif
-
-tests :
-ifeq ($(NOFORTRAN), $(filter 0,$(NOFORTRAN)))
-	touch $(LIBNAME)
-ifndef NO_FBLAS
-	$(MAKE) -C test all
-	$(MAKE) -C utest all
-endif
-ifndef NO_CBLAS
-	$(MAKE) -C ctest all
-endif
-endif
 
 libs :
 ifeq ($(CORE), UNKNOWN)
