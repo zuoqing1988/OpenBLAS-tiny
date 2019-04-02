@@ -22,7 +22,7 @@ RELA = re_lapack
 endif
 
 ifeq ($(NO_FORTRAN), 1)
-define NOFORTRAN
+define NOFORTRAN 
 1
 endef
 define NO_LAPACK
@@ -31,6 +31,8 @@ endef
 export NOFORTRAN
 export NO_LAPACK
 endif
+
+define NO_SHARED 1
 
 LAPACK_NOOPT := $(filter-out -O0 -O1 -O2 -O3 -Ofast,$(LAPACK_FFLAGS))
 
