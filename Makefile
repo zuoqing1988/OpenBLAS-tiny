@@ -266,29 +266,6 @@ ifeq ($(NOFORTRAN), $(filter 0,$(NOFORTRAN)))
 	fi
 endif
 
-lapack-timing : large.tgz timing.tgz
-ifeq ($(NOFORTRAN), $(filter 0,$(NOFORTRAN)))
-	(cd $(NETLIB_LAPACK_DIR); $(TAR) zxf ../timing.tgz TIMING)
-	(cd $(NETLIB_LAPACK_DIR)/TIMING; $(TAR) zxf ../../large.tgz )
-	$(MAKE) -C $(NETLIB_LAPACK_DIR)/TIMING
-endif
-
-
-lapack-test :
-	(cd $(NETLIB_LAPACK_DIR)/TESTING && rm -f x* *.out)
-	$(MAKE) -j 1 -C $(NETLIB_LAPACK_DIR)/TESTING/EIG xeigtstc  xeigtstd  xeigtsts  xeigtstz 
-	$(MAKE) -j 1 -C $(NETLIB_LAPACK_DIR)/TESTING/LIN xlintstc  xlintstd  xlintstds  xlintstrfd  xlintstrfz  xlintsts  xlintstz  xlintstzc xlintstrfs xlintstrfc
-ifneq ($(CROSS), 1)
-	( cd $(NETLIB_LAPACK_DIR)/INSTALL; make all; ./testlsame; ./testslamch; ./testdlamch; \
-        ./testsecond; ./testdsecnd; ./testieee; ./testversion )
-	(cd $(NETLIB_LAPACK_DIR); ./lapack_testing.py -r )
-endif
-
-lapack-runtest:
-	( cd $(NETLIB_LAPACK_DIR)/INSTALL; ./testlsame; ./testslamch; ./testdlamch; \
-        ./testsecond; ./testdsecnd; ./testieee; ./testversion )
-	(cd $(NETLIB_LAPACK_DIR); ./lapack_testing.py -r )
-
 
 blas-test:
 	(cd $(NETLIB_LAPACK_DIR)/BLAS/TESTING && rm -f x* *.out)
