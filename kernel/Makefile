@@ -63,23 +63,6 @@ include Makefile.L3
 
 include Makefile.LA
 
-HPLOBJS = \
-	dgemm_kernel.$(SUFFIX) \
-	$(DGEMMINCOPYOBJ) $(DGEMMITCOPYOBJ) \
-	$(DGEMMONCOPYOBJ) $(DGEMMOTCOPYOBJ) \
-	dtrsm_kernel_LN.$(SUFFIX) dtrsm_kernel_LT.$(SUFFIX) \
-	dtrsm_kernel_RN.$(SUFFIX) dtrsm_kernel_RT.$(SUFFIX) \
-	daxpy_k.$(SUFFIX) dcopy_k.$(SUFFIX) ddot_k.$(SUFFIX) \
-	dger_k.$(SUFFIX)  dscal_k.$(SUFFIX) idamax_k.$(SUFFIX) \
-	dgemv_n.$(SUFFIX) dgemv_t.$(SUFFIX) dgemm_beta.$(SUFFIX) \
-	dtrsm_iunucopy.$(SUFFIX) dtrsm_iunncopy.$(SUFFIX) \
-	dtrsm_ilnucopy.$(SUFFIX) dtrsm_ilnncopy.$(SUFFIX) \
-	dtrsm_iutucopy.$(SUFFIX) dtrsm_iutncopy.$(SUFFIX) \
-	dtrsm_iltucopy.$(SUFFIX) dtrsm_iltncopy.$(SUFFIX) \
-	dtrsm_ounucopy.$(SUFFIX) dtrsm_ounncopy.$(SUFFIX) \
-	dtrsm_olnucopy.$(SUFFIX) dtrsm_olnncopy.$(SUFFIX) \
-	dtrsm_outucopy.$(SUFFIX) dtrsm_outncopy.$(SUFFIX) \
-	dtrsm_oltucopy.$(SUFFIX) dtrsm_oltncopy.$(SUFFIX)
 
 COMMONOBJS	+= lsame.$(SUFFIX) scabs1.$(SUFFIX) dcabs1.$(SUFFIX)
 
@@ -110,15 +93,6 @@ all : libs
 scabs1.$(SUFFIX): $(KERNELDIR)/$(SCABS_KERNEL)
 	$(CC) -c $(CFLAGS) -DCOMPLEX -UDOUBLE -DF_INTERFACE $< -o $(@F)
 
-dcabs1.$(SUFFIX): $(KERNELDIR)/$(DCABS_KERNEL)
-	$(CC) -c $(CFLAGS) -DCOMPLEX -DDOUBLE -DF_INTERFACE $< -o $(@F)
-
-qcabs1.$(SUFFIX): $(KERNELDIR)/$(QCABS_KERNEL)
-	$(CC) -c $(CFLAGS) -DCOMPLEX -DXDOUBLE -DF_INTERFACE $< -o $(@F)
-
-qconjg.$(SUFFIX): $(KERNELDIR)/qconjg.S
-	$(CC) -c $(CFLAGS) -DCOMPLEX -DXDOUBLE -DF_INTERFACE $< -o $(@F)
-
 lsame.$(SUFFIX): $(KERNELDIR)/$(LSAME_KERNEL)
 	$(CC) -c $(CFLAGS) -DF_INTERFACE $< -o $(@F)
 
@@ -142,14 +116,6 @@ cpuid.$(SUFFIX): $(KERNELDIR)/cpuid.S
 scabs1.$(PSUFFIX): $(KERNELDIR)/$(SCABS_KERNEL)
 	$(CC) -c $(PFLAGS) -DCOMPLEX -UDOUBLE -DF_INTERFACE $< -o $(@F)
 
-dcabs1.$(PSUFFIX): $(KERNELDIR)/$(DCABS_KERNEL)
-	$(CC) -c $(PFLAGS) -DCOMPLEX -DDOUBLE -DF_INTERFACE $< -o $(@F)
-
-qcabs1.$(PSUFFIX): $(KERNELDIR)/$(QCABS_KERNEL)
-	$(CC) -c $(PFLAGS) -DCOMPLEX -DXDOUBLE -DF_INTERFACE $< -o $(@F)
-
-qconjg.$(PSUFFIX): $(KERNELDIR)/qconjg.S
-	$(CC) -c $(PFLAGS) -DCOMPLEX -DXDOUBLE -DF_INTERFACE $< -o $(@F)
 
 lsame.$(PSUFFIX): $(KERNELDIR)/$(LSAME_KERNEL)
 	$(CC) -c $(PFLAGS) -DF_INTERFACE $< -o $(@F)
