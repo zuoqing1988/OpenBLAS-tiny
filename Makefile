@@ -32,7 +32,9 @@ export NOFORTRAN
 export NO_LAPACK
 endif
 
-define NO_SHARED 1
+define NO_SHARED 
+1
+endef
 
 LAPACK_NOOPT := $(filter-out -O0 -O1 -O2 -O3 -Ofast,$(LAPACK_FFLAGS))
 
